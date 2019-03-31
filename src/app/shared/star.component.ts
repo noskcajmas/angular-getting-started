@@ -1,4 +1,4 @@
-import { Component, OnChanges } from "@angular/core";
+import { Component, OnChanges, Input, Output, EventEmitter } from "@angular/core";
 
 @Component({
     selector: 'pm-star',
@@ -6,10 +6,15 @@ import { Component, OnChanges } from "@angular/core";
     styleUrls: ['./star.component.css']
 })
 export class StarComponent implements OnChanges {
-    rating: number = 4;
+    @Input() rating: number;
     starWidth: number;
+    @Output() ratingClicked: EventEmitter<string> = 
+        new EventEmitter<string>();
 
+    onClick(){
+        this.ratingClicked.emit(`The rating ${this.rating} was clicked`);
+    }
     ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-        throw new Error("Method not implemented.");
+        this.starWidth = this.rating * 75 / 5;
     }
 }
